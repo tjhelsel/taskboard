@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import TaskColumn from './TaskColumn';
 
 const initialData = [
-  { name: 'Winnie', color: 'lavendar', tasks: ['task1', 'task2'] },
-  { name: 'Bob', color: 'teal', tasks: ['task1', 'task2'] },
-  { name: 'Thomas', color: 'orange', tasks: ['task1', 'task2'] },
-  { name: 'George', color: 'navy', tasks: ['task1', 'task2'] }
+  { name: 'Pending app', color: 'lavender', tasks: [] },
+  { name: 'App sent', color: 'teal', tasks: [] },
+  { name: 'Phone screen completed', color: 'orange', tasks: [] },
+  { name: 'Decision received', color: 'navy', tasks: [] }
 ];
 
 const savedData = window.localStorage.getItem('teamMembers');
@@ -24,9 +24,12 @@ class Home extends Component {
   }
 
   addTask(userId, text) {
-    console.log('add', userId, text);
+    if (text === '') return;
+    const today = new Date();
+    const date = `${today.getMonth() +
+      1}/${today.getDate()}/${today.getFullYear()}`;
     this.setState(prevState => {
-      prevState.teamMembers[userId].tasks.push(text);
+      prevState.teamMembers[userId].tasks.push({ text, date });
       return {
         teamMembers: prevState.teamMembers
       };
@@ -46,7 +49,7 @@ class Home extends Component {
   moveTask(userId, taskId, newUserId) {
     const { teamMembers } = this.state;
     const user = teamMembers[userId];
-    const text = user.tasks[taskId];
+    const {text} = user.tasks[taskId];
     if (newUserId === teamMembers.length) newUserId = 0;
     if (newUserId === -1) newUserId = teamMembers.length - 1;
     this.removeTask(userId, taskId);
@@ -60,18 +63,22 @@ class Home extends Component {
 
   render() {
     return (
-      <div className="column-container">
-        {/* <h1 className="App-header">Ready to do some coding!</h1> */}
-        {this.state.teamMembers.map((teamMember, idx) => (
-          <TaskColumn
-            key={idx}
-            name={teamMember.name}
-            color={teamMember.color}
-            tasks={teamMember.tasks}
-            employeeId={idx}
-            moveTask={this.moveTask}
-          />
-        ))}
+      <div>
+        <div className="column-container">
+          {/* <h1 className="App-header">Ready to do some coding!</h1> */}
+          {this.state.teamMembers.map((teamMember, idx) => (
+            <TaskColumn
+              key={idx}
+              name={teamMember.name}
+              color={teamMember.color}
+              tasks={teamMember.tasks}
+              employeeId={idx}
+              moveTask={this.moveTask}
+              addTask={this.addTask}
+              removeTask={this.removeTask}
+            />
+          ))}
+        </div>
         <button type="button" onClick={() => this.saveData()}>
           Save
         </button>

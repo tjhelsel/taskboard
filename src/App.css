@@ -2,19 +2,14 @@
   text-align: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
 button {
   color: #61dafb;
+}
+
+.delete-button {
+  color: white;
+  background-color: darkred;
+  font-size: x-small;
 }
 
 .column-container {
@@ -26,19 +21,51 @@ button {
 
 .column {
   display: flex;
-  flex-grow: 1;
+  width: 100%;
   flex-direction: column;
   margin: 12.5px;
   background-color: lightgray;
+  height: fit-content;
 }
 
 .column-header {
   background-color: gray;
+  color: white;
   height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .card {
   display: flex;
   justify-content: space-between;
+  background-color: white;
   margin: 5px;
+}
+
+.task-date {
+  font-size: x-small;
+  text-align: end;
+}
+
+.task-details {
+  display: flex;
+  flex-direction: column;
+}
+
+#lavender-header {
+  background-color: mediumpurple;
+}
+
+#teal-header {
+  background-color: teal;
+}
+
+#orange-header {
+  background-color: orange;
+}
+
+#navy-header {
+  background-color: navy;
 }
